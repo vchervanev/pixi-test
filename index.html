@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>webpack 2 demo</title>
+  </head>
+  <body>
+    <script src="dist/bundle.js"></script>
+    <script type="text/javascript">
+      var type = "WebGL"
+      if(!PIXI.utils.isWebGLSupported()){
+        type = "canvas"
+      }
+
+      PIXI.utils.sayHello(type)
+    </script>
+  </body>
+</html>
