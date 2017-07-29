@@ -1,28 +1,37 @@
 import _ from './module1'
 require('pixi.js')
 
-var app = new PIXI.Application(300, 300, 
+var app = new PIXI.Application(400, 400, 
     { 
         antialias: true,
-        backgroundColor: 0xAABBCC,
-        resolution: 2
+        backgroundColor: 0xFFFFFF,
+        resolution: 2,
+        fps: 10,
     });
 document.body.appendChild(app.view);
 
-var graphics = new PIXI.Graphics();
+var fig1 = new PIXI.Graphics()
+fig1.lineStyle(2, 0xAA0000)
+fig1.drawCircle(30, 30, 5)
+app.stage.addChild(fig1)
 
-app.stage.interactive = true
-app.stage.click = function(event) { console.log(event) }
+var fig2 = new PIXI.Graphics()
+fig2.lineStyle(2, 0x00FF00)
+fig2.drawCircle(30, 30, 3)
+app.stage.addChild(fig2)
 
-// draw a circle, set the lineStyle to zero so the circle doesn't have an outline
-graphics.lineStyle(0);
-graphics.beginFill(0xFFFF00, 0.9);
-graphics.drawCircle(30, 30, 30);
-graphics.endFill();
+var fig3 = new PIXI.Graphics()
+fig3.lineStyle(1, 0x0000FF)
+fig3.drawCircle(30, 30, 2)
+app.stage.addChild(fig3)
 
-app.stage.addChild(graphics);
+var trace = new PIXI.Graphics()
+trace.lineStyle(1, 0)
+app.stage.addChild(trace)
 
-var roundMotion = (graphics, steps, point, radius) => {
+var fromPoint = (point) => () => point
+
+var roundMotion = (target, steps, centre, radius) => {
     var sin = Math.sin
     var cos = Math.cos
     var r = radius
@@ -30,8 +39,26 @@ var roundMotion = (graphics, steps, point, radius) => {
     return () => {
         k = (k + 1 / steps) % 1
         var a = 2*Math.PI*k
-        graphics.position.set(point.x + r*cos(a), point.y + r*sin(a))
+        var c = centre()
+        target().set(c.x + r*cos(a), c.y + r*sin(a))
     }
 }
 
-app.ticker.add(roundMotion(graphics, 80, {x: 100, y: 100}, 50))
+var handlers = [
+    roundMotion(fromPoint(fig1.position), 250, fromPoint({x: 120, y: 120}), 70),
+    roundMotion(fromPoint(fig2.position), 100, fromPoint(fig1.position), 40),
+    roundMotion(fromPoint(fig3.position), 20, fromPoint(fig2.position), 20),
+]
+
+// fig1.visible = false
+// fig2.visible = false
+// fig3.visible = false
+handlers.forEach((h) => h())
+
+var doIt = () => {
+    trace.moveTo(fig3.x + 30, fig3.y + 30, 1)
+    handlers.forEach((h) => h())
+    trace.lineTo(fig3.x + 30, fig3.y + 30, 1)        
+}
+
+app.ticker.add(doIt)
