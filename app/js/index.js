@@ -1,5 +1,8 @@
 import _ from './module1'
+require('./editor.jsx')
 require('pixi.js')
+
+
 
 var app = new PIXI.Application(400, 400, 
     { 

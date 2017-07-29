@@ -4,7 +4,8 @@ module.exports = {
   entry: './app/js/index.js',
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+      { test: /\.jsx$/, exclude: /node_modules/, loader: "babel-loader" }
     ]
   },
   output: {
