@@ -1,10 +1,11 @@
 import React from 'react'
+import Item from './Item.jsx'
 
 const Items = (props) => {
 
 return <div>
         {
-            props.items.map((item, i) => (<div key={i}> R:{ item.radius }, S: { item.speed } </div>))
+            props.items.map((item, i) => <Item key={i} data={item} />)
         }
     </div>
 }
