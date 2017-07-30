@@ -18,10 +18,9 @@
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.24.1",
     "pixi.js": "^4.3.5",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "webpack": "^2.2.1"
   },
-  "dependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
-  }
+  "dependencies": {}
 }
