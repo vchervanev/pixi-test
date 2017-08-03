@@ -4,13 +4,13 @@ require('pixi.js')
 
 
 
-var app = new PIXI.Application(400, 400, 
-    { 
-        antialias: true,
-        backgroundColor: 0xFFFFFF,
-        resolution: 2,
-        fps: 10,
-    });
+var app = new PIXI.Application(400, 400,
+  {
+    antialias: true,
+    backgroundColor: 0xFFFFFF,
+    resolution: 2,
+    fps: 10,
+  });
 document.body.appendChild(app.view);
 
 var fig1 = new PIXI.Graphics()
@@ -35,22 +35,22 @@ app.stage.addChild(trace)
 var fromPoint = (point) => () => point
 
 var roundMotion = (target, steps, centre, radius) => {
-    var sin = Math.sin
-    var cos = Math.cos
-    var r = radius
-    var k = 0
-    return () => {
-        k = (k + 1 / steps) % 1
-        var a = 2*Math.PI*k
-        var c = centre()
-        target().set(c.x + r*cos(a), c.y + r*sin(a))
-    }
+  var sin = Math.sin
+  var cos = Math.cos
+  var r = radius
+  var k = 0
+  return () => {
+    k = (k + 1 / steps) % 1
+    var a = 2 * Math.PI * k
+    var c = centre()
+    target().set(c.x + r * cos(a), c.y + r * sin(a))
+  }
 }
 
 var handlers = [
-    roundMotion(fromPoint(fig1.position), 250, fromPoint({x: 120, y: 120}), 70),
-    roundMotion(fromPoint(fig2.position), 100, fromPoint(fig1.position), 40),
-    roundMotion(fromPoint(fig3.position), 20, fromPoint(fig2.position), 20),
+  roundMotion(fromPoint(fig1.position), 250, fromPoint({ x: 120, y: 120 }), 70),
+  roundMotion(fromPoint(fig2.position), 100, fromPoint(fig1.position), 40),
+  roundMotion(fromPoint(fig3.position), 20, fromPoint(fig2.position), 20),
 ]
 
 // fig1.visible = false
@@ -59,9 +59,9 @@ var handlers = [
 handlers.forEach((h) => h())
 
 var doIt = () => {
-    trace.moveTo(fig3.x + 30, fig3.y + 30, 1)
-    handlers.forEach((h) => h())
-    trace.lineTo(fig3.x + 30, fig3.y + 30, 1)        
+  trace.moveTo(fig3.x + 30, fig3.y + 30, 1)
+  handlers.forEach((h) => h())
+  trace.lineTo(fig3.x + 30, fig3.y + 30, 1)
 }
 
 app.ticker.add(doIt)
