@@ -1,4 +1,3 @@
-import _ from './module1'
 require('./editor.jsx')
 require('pixi.js')
 
