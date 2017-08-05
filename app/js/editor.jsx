@@ -1,12 +1,10 @@
 import React from 'react'
-import { render } from 'react-dom'
 import Items from './editor/Items.jsx'
-
 import state from './state'
-const node = document.querySelector('#reactRoot')
-const element = <div>
+
+const editor = (<div>
   <Items items={state.items} />
   <button onClick={() => alert(1)}>AAA</button>
-</div>
+</div>)
 
-render(element, node)
+export default editor
